@@ -2,7 +2,7 @@ import os
 import cv2
 import numpy as np
 import aiofiles
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 import uvicorn
 import threading
 from pyngrok import ngrok
@@ -16,8 +16,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
 
-templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 
 
@@ -38,6 +37,9 @@ if not os.path.exists(MODEL_PATH):
 print(f"🔄 Đang tải mô hình YOLOv8 từ {MODEL_PATH}...")
 model = YOLO(MODEL_PATH)
 print("✅ Mô hình YOLOv8 đã sẵn sàng!")
+
+# Cấu hình templates folder
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):

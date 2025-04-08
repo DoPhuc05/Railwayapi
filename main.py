@@ -10,6 +10,12 @@ from ultralytics import YOLO
 from app.dtbase import db, upload_to_imgbb, upload_to_streamable # Thay đổi sang ImgBB
 from collections import deque  # 🔥 Lưu lịch sử số lượng swimmer
 from datetime import datetime
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
+
+templates = Jinja2Templates(directory="templates")
+
 
 # ✅ Khởi tạo FastAPI
 app = FastAPI()

@@ -9,3 +9,5 @@ ultralytics==8.0.150
 pymongo
 python-dotenv
 requests
+Jinja2
+python-multipart

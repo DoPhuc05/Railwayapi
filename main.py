@@ -265,4 +265,5 @@ def stop_camera():
     return {"message": "⏹ Camera đã được tắt và video đã được xử lý."}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))  # Lấy PORT từ biến môi trường nếu có, mặc định là 8000
+    uvicorn.run(app, host="0.0.0.0", port=port)

@@ -35,6 +35,11 @@ print(f"🔄 Đang tải mô hình YOLOv8 từ {MODEL_PATH}...")
 model = YOLO(MODEL_PATH)
 print("✅ Mô hình YOLOv8 đã sẵn sàng!")
 
+@app.get("/", response_class=HTMLResponse)
+def get_home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
 @app.post("/predict-image/")
 async def predict_image(file: UploadFile = File(...)):
     """Nhận ảnh, chạy YOLOv8, lưu MongoDB & ImgBB"""

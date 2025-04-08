@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Swimmer Detection</title>
+</head>
+<body>
+    <h1>🏊‍♂️ Swimmer Detection with YOLOv8</h1>
+
+    <h2>🔹 Upload Image</h2>
+    <form id="image-form" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Upload & Detect</button>
+    </form>
+    <div id="image-result"></div>
+
+    <h2>🔹 Upload Video</h2>
+    <form id="video-form" enctype="multipart/form-data">
+        <input type="file" name="file" accept="video/*" required>
+        <button type="submit">Upload & Detect</button>
+    </form>
+    <div id="video-result"></div>
+
+    <h2>🔹 Realtime Camera</h2>
+    <button onclick="startCamera()">Start Camera</button>
+    <button onclick="stopCamera()">Stop Camera</button>
+    <div id="camera-result"></div>
+
+    <script>
+        document.getElementById("image-form").onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const res = await fetch("/predict-image/", {
+                method: "POST",
+                body: formData
+            });
+            const data = await res.json();
+            document.getElementById("image-result").innerHTML = `
+                <p>Detected: ${data.person_count} swimmers</p>
+                <img src="${data.image_url}" width="400">
+            `;
+        };
+
+        document.getElementById("video-form").onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const res = await fetch("/predict-video/", {
+                method: "POST",
+                body: formData
+            });
+            const data = await res.json();
+            document.getElementById("video-result").innerHTML = `
+                <p>Total swimmers: ${data.total_swimmer_count}</p>
+                <a href="${data.video_url}" target="_blank">Watch Video</a>
+            `;
+        };
+
+        async function startCamera() {
+            const res = await fetch("/start-camera/");
+            const data = await res.json();
+            document.getElementById("camera-result").innerText = data.message;
+        }
+
+        async function stopCamera() {
+            const res = await fetch("/stop-camera/");
+            const data = await res.json();
+            document.getElementById("camera-result").innerText = data.message;
+        }
+    </script>
+</body>
+</html>

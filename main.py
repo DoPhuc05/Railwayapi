@@ -10,11 +10,15 @@ from ultralytics import YOLO
 from app.dtbase import db, upload_to_imgbb, upload_to_streamable # Thay đổi sang ImgBB
 from collections import deque  # 🔥 Lưu lịch sử số lượng swimmer
 from datetime import datetime
-from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
+
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 
 # ✅ Khởi tạo FastAPI
@@ -36,8 +40,9 @@ model = YOLO(MODEL_PATH)
 print("✅ Mô hình YOLOv8 đã sẵn sàng!")
 
 @app.get("/", response_class=HTMLResponse)
-def get_home(request: Request):
+async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 
 @app.post("/predict-image/")

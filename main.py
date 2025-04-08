@@ -16,10 +16,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
 
-
-
-
-
 # ✅ Khởi tạo FastAPI
 app = FastAPI()
 

@@ -262,4 +262,7 @@ def stop_camera():
     recording = False
     return {"message": "⏹ Camera đã được tắt và video đã được xử lý."}
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Nếu PORT không có, dùng mặc định là 8000
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
 

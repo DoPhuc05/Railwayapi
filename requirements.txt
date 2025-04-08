@@ -2,7 +2,7 @@ fastapi
 uvicorn
 aiofiles
 numpy
-
+opencv-python-headless
 gdown
 pyngrok
 ultralytics==8.0.150
